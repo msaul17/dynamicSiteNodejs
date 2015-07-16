@@ -7,8 +7,9 @@ function home (request, response) {
     //show search
     response.writeHead(200, {'Content-Type': 'text/plain'}); 
     renderer.view("header", {}, response); 
-    response.write("Search\n");
-    response.end('Footer\n');
+    renderer.view("search", {}, response);
+    renderer.view("footer", {}, response);
+    response.end();
   }
   //if url == "/" && POST
     //redirect to /:username
@@ -20,7 +21,7 @@ function user (request, response) {
   var username = request.url.replace("/", "");
     if (username.length > 0) {
       response.writeHead(200, {'Content-Type': 'text/plain'});  
-      response.write("Header\n");
+      renderer.view("header", {}, response);
       // get json data from Treehouse
     var studentProfile = new Profile(username);
       // on end
@@ -35,17 +36,18 @@ function user (request, response) {
           javascriptPoints : profileJSON.points.JavaScript
         };
         // Simple Response
-        response.write(values.username + " has " + values.badges + " badges\n");
-        response.write("and has " + values.javascriptPoints + " points in JavaScript\n");
-        response.write("Soon he'll break 2,000 point in JavaScript\n");
-        response.end("Footer\n");
+        renderer.view("profile", values, response);
+        renderer.view("footer", {}, response);
+        response.end();
       });
 
       //on "error"
       studentProfile.on("error", function (error) {
         // show error
-        response.error(error.message + "\n");
-        response.end('Footer\n');
+        renderer.view("error", {errorMessage: error.message}, response);
+        renderer.view("search", {}, response);
+        renderer.view("footer", {}, response);
+        response.end();
       });
 
     }
