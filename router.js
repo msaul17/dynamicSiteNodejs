@@ -1,6 +1,7 @@
 var Profile = require("./profile.js");
 var renderer = require("./render.js");
 
+// common headers 
 var commonHeaders = {'Content-Type': 'text/plain'};
 
 function home (request, response) {
