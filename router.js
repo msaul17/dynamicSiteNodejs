@@ -2,7 +2,7 @@ var Profile = require("./profile.js");
 var renderer = require("./render.js");
 
 // common headers 
-var commonHeaders = {'Content-Type': 'text/plain'};
+var commonHeaders = {'Content-Type': 'text/html'};
 
 function home (request, response) {
   //if url == "/" && GET
